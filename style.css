@@ -1,0 +1,54 @@
+* {
+    text-align: center;
+}
+
+p {
+    text-align: left;
+}
+
+ul {
+    display: inline-block;
+}
+
+.hidden_Main, .hidden_Score {
+    color: white;
+    background-color: white;
+}
+
+.not_Hidden_Main {
+    /* background-color: white;
+    color: black;
+    padding: 5px;
+    margin: 5px;
+    max-width: 20vw;
+    min-width: 10vw;
+    border-radius: 10px;
+    text-align: left; */
+}
+
+.hidden_List {
+    color: white;
+    background: white;
+}
+
+.not_Hidden_List > li {
+    background-color: red;
+    padding: 5px;
+    margin: 15px;
+    max-width: 20vw;
+    min-width: 20vw;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.not_Hidden_Score {
+    color: red;
+}
+
+#reset_Yes, #reset_No {
+    background-color: red;
+    margin: 15px;
+    padding: 5px;
+    max-width: 100px;
+    text-align: center;
+}
