@@ -13,7 +13,7 @@ var answer_key = [0,1,2,2,3,2,2,1,1,1];
 var question_count = 0;
 var is_Correct = 0;
 var correct_Score = 0;
-var scoreboard_Array = [];
+var current_Score = [];
 
 document.querySelector("#begin_button").addEventListener("click", Begin);
 
@@ -34,21 +34,14 @@ function Begin () {
     document.querySelector("#Answer3").textContent = list_of_Questions[3];
     document.querySelector("#Answer4").textContent = list_of_Questions[4];
 
+    document.querySelector("#Answer1").addEventListener("click", check_Answer);
+    document.querySelector("#Answer2").addEventListener("click", check_Answer);
+    document.querySelector("#Answer3").addEventListener("click", check_Answer);
+    document.querySelector("#Answer4").addEventListener("click", check_Answer);
+
     // Reset question count and score count in case the user clicks where the buttons are, as they are hidden
     question_count = 0;
     correct_Score = 0;
-}
-
-function Retry () {
-    question_count = 0;
-    correct_Score = 0;
-
-    document.querySelector(".Question").textContent = (list_of_Questions[0] + " (" + question_count + ") ");
-    document.querySelector("#Answer1").textContent = list_of_Questions[1];
-    document.querySelector("#Answer2").textContent = list_of_Questions[2];
-    document.querySelector("#Answer3").textContent = list_of_Questions[3];
-    document.querySelector("#Answer4").textContent = list_of_Questions[4];
-    document.querySelectorAll("#final_Screen").remove();
 }
 
 function check_Answer() {
@@ -87,7 +80,6 @@ function change_Question() {
     
     if (question_count > answer_key.length-1) {
         end_Of_Quiz();
-        console.log(question_count + " is greater than " + (answer_key.length-1) + " so ending quiz.");
         question_count = 0;
         return; //end the quiz
     } else {    
@@ -101,36 +93,77 @@ function change_Question() {
 }
 
 function end_Of_Quiz() {
-    document.querySelector(".not_Hidden_List").setAttribute("class", "hidden_List");
     var first_Name = prompt(("You've scored " + correct_Score + " out of " + answer_key.length + " questions correct!"), "Enter your name here for high scores!");
-
-    scoreboard_Array.push(first_Name);
-    scoreboard_Array.push(correct_Score);
 
     document.body.appendChild(document.createElement("section"));
     document.body.lastChild.setAttribute("id", "final_Screen");
     document.body.lastChild.textContent = "Name // Score";
-
-    console.log("scoreboard array contains: " +scoreboard_Array);
-
-    for (let i = 0; i < scoreboard_Array.length; i += 2){
-        console.log("making new p element");
-        document.body.lastChild.appendChild(document.createElement("p"));
-        document.body.lastChild.lastChild.textContent = scoreboard_Array[i] + " // " + correct_Score;
-    }
-
-    document.body.appendChild(document.createElement("section"));
-    document.body.lastChild.setAttribute("id", "final_Screen");
-    document.body.lastChild.textContent = "Play Again??";
-    document.body.appendChild(document.createElement("p"));
-    document.body.lastChild.textContent = "YES";
-    document.body.lastChild.setAttribute("id", "reset_Yes");
-    document.body.appendChild(document.createElement("p"));
-    document.body.lastChild.textContent = "NO";
-    document.body.lastChild.setAttribute("id", "reset_No");
-    
     document.querySelector(".not_Hidden_Score").setAttribute("class", "hidden_Score");
 
-    document.querySelector("#reset_Yes").addEventListener("click", Retry);
-    document.querySelector("#reset_No").addEventListener("click", Retry);
+    cleanup_step();
+    write_HighScores (first_Name, correct_Score);
+    display_HighScores();
+
+}
+
+function cleanup_step() {
+    document.querySelector(".Question").textContent = "CURRENT HIGH SCORES";
+    document.querySelector(".not_Hidden_List").remove();
+}
+
+function write_HighScores (first_Name, correct_Score) {
+    var initials = JSON.parse(localStorage.getItem("initials"));
+    var init_scores = JSON.parse(localStorage.getItem("scores"));
+
+    console.log("Current initials are: " + initials);
+    console.log("Current initials are: " + init_scores);
+
+    var score_names = [];
+    var score_score = [];
+    var inserted = false;
+
+    if(initials == null) {
+        console.log("initials are null! Writing first highscore")
+        score_names.push(first_Name);
+        score_score.push(correct_Score);
+        inserted = true;
+    }
+    else {
+        for (let i=0; i < init_scores.length; i++) {
+            if (correct_Score > init_scores[i] && inserted == false)
+            {
+                console.log("Not yet inserted, new high scorer")
+                inserted = true;
+                score_names.push(first_Name);
+                score_score.push(correct_Score);
+                score_names.push(initials[i]);
+                score_score.push(init_scores[i]);
+            }
+            else {
+                console.log("Just pushing score")
+                score_names.push(initials[i]);
+                score_score.push(init_scores[i]);
+            }
+        }
+    }
+
+    console.log(score_names);
+    console.log(score_score);
+
+    localStorage.setItem("initials", JSON.stringify(score_names));
+    localStorage.setItem("scores", JSON.stringify(score_score));
+}
+
+function display_HighScores() {
+    var initials = JSON.parse(localStorage.getItem("initials"));
+    var init_scores = JSON.parse(localStorage.getItem("scores"));
+
+    console.log("Current initials are: " + initials);
+    console.log("Current scores are: " + init_scores);
+
+    for (let i = 0; i < initials.length; i++) {
+        console.log("making new p element");
+        document.body.lastChild.appendChild(document.createElement("p"));
+        document.body.lastChild.lastChild.textContent = initials[i] + " // " + init_scores[i];
+    }
 }
