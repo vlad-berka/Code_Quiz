@@ -45,10 +45,18 @@ ul {
     color: red;
 }
 
-#reset_Yes, #reset_No {
-    background-color: red;
-    margin: 15px;
-    padding: 5px;
-    max-width: 100px;
-    text-align: center;
+#your_Score {
+    color: red;
+    size: 50px;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+#replay_Game, #begin_button {
+    margin-bottom: 50px;
+    margin-top: 25px;
+    font-size: 25px;
 }
