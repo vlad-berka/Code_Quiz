@@ -1,6 +1,6 @@
-const list_of_Questions = ["Question 1", "q1a1", "q1a2", "q1a3", "q1a4",
-                        "Question 2", "q2a1", "q2a2", "q2a3", "q2a4",
-                        "Question 3", "q3a1", "q3a2", "q3a3", "q3a4",  
+const list_of_Questions = ["Which of the following equality operators also checks type?", "(=)", "(!==)", "(===)", "(==)",
+                        "If we have an array that contains 5 items, which index number corresponds to the last item?", "0", "-L", "5", "4",
+                        "When passing the function named 'thisFunction' as an argument into 'thatFunction', which syntax calling the function is correct?", "thisFunction(thatfunction)", "thatFunction(function thisFunction)", "function(thisFunction, thatFunction)", "thatFunction(thisFunction)",  
                         "Question 4", "Answer1", "Answer2", "Answer3","Answer4",  
                         "Question 5", "Answer1", "Answer2", "Answer3","Answer4",  
                         "Question 6", "Answer1", "Answer2", "Answer3","Answer4",  
@@ -9,12 +9,13 @@ const list_of_Questions = ["Question 1", "q1a1", "q1a2", "q1a3", "q1a4",
                         "Question 9", "Answer1", "Answer2", "Answer3","Answer4",
                         "Question 10", "Answer1", "Answer2", "Answer3","Answer4"];
 
-var answer_key = [0,1,2,2,3,2,2,1,1,1];
+var answer_key = [2,3,3,2,3,2,2,1,1,1];
 var question_count = 0;
 var correct_Count = 0;
 var secondsLeft = 0;
 var current_Score = [];
 var high_score_position = 0;
+var scantron = [];
 var secondsLeft = 60;
 var quiz_End = false;
 
@@ -33,30 +34,31 @@ function Begin() {
     document.querySelector("#Answer3").textContent = list_of_Questions[3];
     document.querySelector("#Answer4").textContent = list_of_Questions[4];
 
-    document.querySelector("#Answer1").addEventListener("click", check_Answer);
-    document.querySelector("#Answer2").addEventListener("click", check_Answer);
-    document.querySelector("#Answer3").addEventListener("click", check_Answer);
-    document.querySelector("#Answer4").addEventListener("click", check_Answer);
+    document.querySelector("ul").addEventListener("click", check_Answer);
 
     // Reset question count and score count in case the user clicks where the buttons are, as they are hidden
     question_count = 0;
 }
 
 function check_Answer() {
-    var answer = event.currentTarget.getAttribute("id");
+    var answer = event.target.getAttribute("id");
 
     if (answer == "Answer1")
     {
         answer = 0;
+        scantron.push(answer);
     } 
     else if (answer == "Answer2") {
         answer = 1;
+        scantron.push(answer);
     }
     else if (answer == "Answer3") {
         answer = 2;
+        scantron.push(answer);
     }
     else {
         answer = 3;
+        scantron.push(answer);
     }
 
     if (answer == answer_key[question_count])
@@ -65,7 +67,7 @@ function check_Answer() {
         correct_Count++;
     } else {
         // Answer NOT correct
-        secondsLeft -= 6;
+        secondsLeft -= 4;
         answer = false;
     }
 
@@ -74,7 +76,6 @@ function check_Answer() {
 
 function change_Question() {
     question_count++;
-    console.log(question_count);
     
     if (question_count > answer_key.length-1) {
         end_Of_Quiz();
@@ -82,8 +83,8 @@ function change_Question() {
         return; //end the quiz
     } else {    
         var array_pos = question_count*5;
-        document.querySelector(".Question").textContent = list_of_Questions[array_pos];// +" (" + question_count + ") ";
-        document.querySelector("#Answer1").textContent = list_of_Questions[array_pos+1];
+        document.querySelector(".Question").textContent = list_of_Questions[array_pos];
+        document.querySelector("#Answer1").textContent = list_of_Questions[(array_pos+1)];
         document.querySelector("#Answer2").textContent = list_of_Questions[array_pos+2];
         document.querySelector("#Answer3").textContent = list_of_Questions[array_pos+3];
         document.querySelector("#Answer4").textContent = list_of_Questions[array_pos+4];
@@ -99,9 +100,6 @@ function end_Of_Quiz() {
     document.body.lastChild.textContent = "Name // Score";
     document.querySelector(".not_Hidden_Score").setAttribute("class", "hidden_Score");
 
-    console.log("Entered name is: " +first_Name);
-
-    // cleanup_step();
     write_HighScores (first_Name, secondsLeft);
     display_HighScores();
 }
@@ -115,24 +113,18 @@ function write_HighScores (first_Name, secondsLeft) {
     var initials = JSON.parse(localStorage.getItem("initials"));
     var init_scores = JSON.parse(localStorage.getItem("scores"));
 
-    console.log("Current initials are: " + initials);
-    console.log("Current initials are: " + init_scores);
-
     var score_names = [];
     var score_score = [];
     var inserted = false;
 
     if(initials == null) {
-        console.log("initials are null! Writing first highscore")
         score_names.push(first_Name);
         score_score.push(secondsLeft);
     }
     else {
-        console.log("going into for loop with score: " +secondsLeft+ " and inserted: " +inserted);
         for (let i=0; i < init_scores.length; i++) {
             if (secondsLeft > init_scores[i] && inserted == false)
             {
-                console.log("Not yet inserted, new high scorer")
                 inserted = true;
                 score_names.push(first_Name);
                 score_score.push(secondsLeft);
@@ -141,7 +133,6 @@ function write_HighScores (first_Name, secondsLeft) {
                 high_score_position = i;
             }
             else {
-                console.log("Just pushing score")
                 score_names.push(initials[i]);
                 score_score.push(init_scores[i]);
             }
@@ -152,10 +143,6 @@ function write_HighScores (first_Name, secondsLeft) {
             high_score_position = init_scores.length; 
         }
     }
-
-    console.log(score_names);
-    console.log(score_score);
-
     localStorage.setItem("initials", JSON.stringify(score_names));
     localStorage.setItem("scores", JSON.stringify(score_score));
 }
@@ -167,29 +154,17 @@ function display_HighScores() {
     var initials = JSON.parse(localStorage.getItem("initials"));
     var init_scores = JSON.parse(localStorage.getItem("scores"));
 
-    console.log("Current initials are: " + initials);
-    console.log("Current scores are: " + init_scores);
-
     for (let i = 0; i < initials.length; i++) {
         if (i == high_score_position) {
-            console.log("making new p element");
             document.body.lastChild.appendChild(document.createElement("p"));
             document.body.lastChild.lastChild.textContent = initials[i] + " // " + init_scores[i];
             document.body.lastChild.lastChild.setAttribute("id", "your_Score");
         }
         else {
-        console.log("making new p element");
         document.body.lastChild.appendChild(document.createElement("p"));
         document.body.lastChild.lastChild.textContent = initials[i] + " // " + init_scores[i];
         }
     }
-    console.log("Current score position is: " +high_score_position);
-
-    // document.querySelector(".not_Hidden_Main").appendChild(document.createElement("section"));
-    // document.querySelector(".not_Hidden_Main").lastChild.setAttribute("id", "replay_Game");
-    // document.querySelector(".not_Hidden_Main").lastChild.textContent = "Play Again??";
-    // document.querySelector("#replay_Game").addEventListener("click", reload_Me);
-
     document.querySelector(".not_Hidden_Main").appendChild(document.createElement("button"));
     document.querySelector(".not_Hidden_Main").lastChild.setAttribute("id", "replay_Game");
     document.querySelector(".not_Hidden_Main").lastChild.textContent = "Play Again!!";
