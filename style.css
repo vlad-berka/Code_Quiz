@@ -1,3 +1,9 @@
+:root {
+    --far-background-color: rgb(173, 134, 82);
+    --container-color: burlywood;
+    --inner-container-color: blanchedalmond;
+}
+
 * {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif
@@ -7,58 +13,72 @@ p {
     text-align: center;
 }
 
-ul {
+ul, .inner_Header {
     display: inline-block;
     list-style-type: lower-alpha;
     width: 50vw;
-    background-color: blanchedalmond;
+    background-color: var(--inner-container-color);
     border-radius: 20px;
     box-shadow: 5px, 5px, 5px, 5px;
 }
 
 .start_Header {
-    background-color: burlywood;
+    background-color: var(--container-color);
     border-radius: 50px;
     margin-bottom: 20px;
+    min-width: 80vw;
+    border: black 2px solid;
 }
 
 .hidden_Main, .hidden_Score {
-    color: white;
-    background-color: burlywood;
+    color: var(--far-background-color);
     border-radius: 50px;
-}
-
-.not_Hidden_Main {
-    background-color: burlywood;
-    border-radius: 50px;
-    margin-bottom: 20px
-}
-
-.hidden_List {
-    color: white;
-    background-color: white;
 }
 
 .hidden_Score {
-    background-color: darksalmon;
+    color: var(--far-background-color);
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.hidden_Main > * {
+    background-color: red;
+}
+
+.not_Hidden_Main {
+    background-color: var(--container-color);
+    border-radius: 50px;
+    margin-bottom: 20px;
+    min-width: 80vw;
+    border: black 2px solid;
+}
+
+.hidden_List {
+    color: var(--far-background-color);
+    background-color: var(--far-background-color);
+}
+
+.not_Hidden_List {
+    border: black 2px solid;
 }
 
 .not_Hidden_List > li {
-    background-color: rgba(255, 00, 00, 1);
+    background-color: burlywood;
     padding: 5px;
     margin: 15px;
-    max-width: 40vw;
-    min-width: 40vw;
+    width: 45vw;
     border-radius: 10px;
     text-align: left;
 }
 
 .not_Hidden_List > li:hover {
-    background-color: rgba(255, 00, 00, 0.4);
+    background-color: rgba(128, 110, 231, 0.2);
 }
 
 .not_Hidden_Score {
-    color: red;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 #your_Score {
@@ -67,24 +87,47 @@ ul {
     font-weight: bold;
 }
 
-h1 {
+.not_Hidden_Main > h1, .start_Header > h1 {
     font-size: 50px;
+    font-size: 40px;
     color: black;
     margin: 0px;
+    padding: 20px 40px 20px 40px;
+    max-width: 75vw;
+    height: 10vh;
+}
+
+/* .start_Header > h1 {
+    font-size: 50px;
+    height: 5vh;
+} */
+
+.inner_Header > h2 {
+    font-size: 15px;
 }
 
 #replay_Game, #begin_button {
-    margin-bottom: 50px;
+    margin-bottom: 29px;
     margin-top: 25px;
     font-size: 25px;
 }
 
 body {
     display: inline-block;
-    background-color: darksalmon;
+    background-color: var(--far-background-color);
 }
 
-#final_Screen {
-    background-color: burlywood;
-    border-radius: 50px;
+#final_Screen, .final_Screen_Header {
+    background-color: var(--container-color);
+    border-radius: 0 0 50px 50px;
+    width: 30vw;
+    margin: auto;
+}
+
+.final_Screen_Header {
+    border-radius: 50px 50px 0 0;
+}
+
+.inner_Header {
+    border: black solid 2px;
 }
