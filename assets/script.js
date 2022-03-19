@@ -138,8 +138,7 @@ function end_Of_Quiz() {
     console.log(secondsLeft);
 
     // This if statement filters out time in case the user ran out of time
-    // NOTE: The Timer function has the if statement that assigns the 'Timed Out!' string in place of the number
-    if(secondsLeft=="Timed Out!"){
+    if(secondsLeft==0){
         var first_Name = prompt(("You've run out of time!"), "Enter your name here for high scores!");
     } else {
         var first_Name = prompt(("You've ended the quiz with " + Math.floor(secondsLeft/10) + " seconds remaining!"), "Enter your name here for high scores!");
@@ -148,17 +147,16 @@ function end_Of_Quiz() {
     // Sets up the high score HTML elements
     document.body.appendChild(document.createElement("section"));
     document.body.lastChild.setAttribute("id", "final_Screen");
-    document.body.lastChild.textContent = "Name - - - Score";
+    // document.body.lastChild.textContent = "Name - - - Score";
+
+    document.body.lastChild.appendChild(document.createElement("h3"));
+    document.body.lastChild.lastChild.textContent = "Name - - - Score";
+
     // Hides the timer at the top of the screen
     document.querySelector(".not_Hidden_Score").setAttribute("class", "hidden_Score");
 
     // Need to filter out the string score value instead of a number - math operation present to translate decisecond timer back to second timer
-    if(secondsLeft=="Timed Out!"){
-        write_HighScores (first_Name, "Timed Out!")
-    }
-    else {
-        write_HighScores (first_Name, Math.floor(secondsLeft/10));
-    }
+    write_HighScores (first_Name, Math.floor(secondsLeft/10));
 
     //Runs the Highscore function
     display_HighScores();
@@ -250,11 +248,11 @@ function display_HighScores() {
         }
     }
     // Adds an HTML button element to re-start the quiz
-    document.querySelector(".not_Hidden_Main").appendChild(document.createElement("button"));
+    document.body.lastChild.appendChild(document.createElement("button"));
     // Adds an ID to the button for the listener element
-    document.querySelector(".not_Hidden_Main").lastChild.setAttribute("id", "replay_Game");
+    document.body.lastChild.lastChild.setAttribute("id", "replay_Game");
     // Adds text onto the button element
-    document.querySelector(".not_Hidden_Main").lastChild.textContent = "Play Again!!";
+    document.querySelector("#replay_Game").textContent = "Play Again!!";
     // Adds the listener event onto the button to restart the game
     document.querySelector("#replay_Game").addEventListener("click", reload_Me);
 }
@@ -268,22 +266,21 @@ function reload_Me() {
 function Timer() {
     // Sets interval in variable
     var timerInterval = setInterval(function() {
-    // Each time the interval triggers, we subtract an interval amount
-    secondsLeft--;
-    // This updates the timer count at the top of the webpage
-    document.querySelector(".not_Hidden_Score").textContent = Math.floor(secondsLeft/10) + " seconds left on the quiz.";
+        // Each time the interval triggers, we subtract an interval amount
+        secondsLeft--;
+        // This updates the timer count at the top of the webpage
+        document.querySelector(".not_Hidden_Score").textContent = Math.floor(secondsLeft/10) + " seconds left on the quiz.";
 
-    // If statement filters if we've run out of time
-    if(secondsLeft <= 0) {
-        // Stops the timer at 0 or less seconds
-        // For scoring, set text of secondsLeft to 'Timed Out' instead of a 0 or negative score
-        secondsLeft = "Timed Out!";
-        // Clears the interval to stop counting  time
-        clearInterval(timerInterval);
-        // Added tracking variable to prevent time counting down before high scores were written
-        if (quiz_End == false) {
-            end_Of_Quiz();
+        // If statement filters if we've run out of time
+        if(secondsLeft <= 0) {
+            // Stops the timer at 0 or less seconds
+            secondsLeft = 0;
+            // Clears the interval to stop counting  time
+            clearInterval(timerInterval);
+            // Added tracking variable to prevent time counting down before high scores were written
+            if (quiz_End == false) {
+                end_Of_Quiz();
+            }
         }
-    }
-}, 100); // NOTE: DECI-SECOND NOTATION, EVERY 1/10th OF A SECOND WE COUNT DOWN
+    }, 100); // NOTE: DECI-SECOND NOTATION, EVERY 1/10th OF A SECOND WE COUNT DOWN
 }

@@ -8,7 +8,7 @@
 /* Global CSS properties that affect every element and container */
 * {
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Centering text, note P is used primarily for high scores */
@@ -145,6 +145,7 @@ body {
 .final_Screen_Header {
     border-radius: 50px 50px 0 0;
     border-bottom: none;
+    padding-bottom: 15px;
 }
 
 /* Minor adjustment to the header border as it's supposed to look homogenous with the next HTML element */
@@ -155,4 +156,16 @@ body {
 /* Adding a border to a container element for continuous visual appearance */
 .inner_Header {
     border: black solid 2px;
+}
+
+h1.Question {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+h3 {
+    text-decoration: underline;
+    font-weight: bold;
+    margin-top: 0px;
+    padding-top: 15px;
 }
