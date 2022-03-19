@@ -1,7 +1,9 @@
 /* Sets variable names for re-used colors */
 :root {
     --far-background-color: rgb(173, 134, 82);
+    /* --far-background-color: rgb(240, 225, 140); */
     --container-color: burlywood;
+    /* --container-color: rgb(165, 203, 231); */
     --inner-container-color: blanchedalmond;
 }
 

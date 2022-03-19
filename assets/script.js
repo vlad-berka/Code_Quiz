@@ -135,8 +135,6 @@ function end_Of_Quiz() {
     // Changing the quiz status to ended, prevents timer bugs
     quiz_End = true;
 
-    console.log(secondsLeft);
-
     // This if statement filters out time in case the user ran out of time
     if(secondsLeft==0){
         var first_Name = prompt(("You've run out of time!"), "Enter your name here for high scores!");
@@ -269,7 +267,10 @@ function Timer() {
         // Each time the interval triggers, we subtract an interval amount
         secondsLeft--;
         // This updates the timer count at the top of the webpage
-        document.querySelector(".not_Hidden_Score").textContent = Math.floor(secondsLeft/10) + " seconds left on the quiz.";
+        // If it exists... of course... it may be hiding
+        if (document.querySelector(".not_Hidden_Score") != null) {
+            document.querySelector(".not_Hidden_Score").textContent = Math.floor(secondsLeft/10) + " seconds left on the quiz.";
+        }
 
         // If statement filters if we've run out of time
         if(secondsLeft <= 0) {
