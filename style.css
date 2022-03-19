@@ -1,18 +1,22 @@
+/* Sets variable names for re-used colors */
 :root {
     --far-background-color: rgb(173, 134, 82);
     --container-color: burlywood;
     --inner-container-color: blanchedalmond;
 }
 
+/* Global CSS properties that affect every element and container */
 * {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif
 }
 
+/* Centering text, note P is used primarily for high scores */
 p {
     text-align: center;
 }
 
+/* Background styles for the answer choices and starting header */
 ul, .inner_Header {
     display: inline-block;
     list-style-type: lower-alpha;
@@ -22,6 +26,7 @@ ul, .inner_Header {
     box-shadow: 5px, 5px, 5px, 5px;
 }
 
+/* Starting header appearance */
 .start_Header {
     background-color: var(--container-color);
     border-radius: 50px;
@@ -30,21 +35,22 @@ ul, .inner_Header {
     border: black 2px solid;
 }
 
+/* Setting items we want hidden to background color */
+/* Classes change with javascript to make them not hidden */
 .hidden_Main, .hidden_Score {
     color: var(--far-background-color);
     border-radius: 50px;
 }
 
+/* Setting score/timer at top of page to background color to hide it*/
 .hidden_Score {
     color: var(--far-background-color);
     font-size: 25px;
     font-weight: bold;
 }
 
-.hidden_Main > * {
-    background-color: red;
-}
-
+/* Setting items we no longer want hidden to their appropriate colors */
+/* Classes change with javascript to make them not hidden */
 .not_Hidden_Main {
     background-color: var(--container-color);
     border-radius: 50px;
@@ -53,15 +59,21 @@ ul, .inner_Header {
     border: black 2px solid;
 }
 
+/* Setting items we want hidden to background color */
+/* Classes change with javascript to make them not hidden */
 .hidden_List {
     color: var(--far-background-color);
     background-color: var(--far-background-color);
 }
 
+/* Setting items we no longer want hidden to their appropriate colors */
+/* Classes change with javascript to make them not hidden */
 .not_Hidden_List {
     border: black 2px solid;
 }
 
+/* Changing the potential answer choice backgrond when no longer hidden */
+/* Classes change with javascript to make them not hidden */
 .not_Hidden_List > li {
     background-color: burlywood;
     padding: 5px;
@@ -71,22 +83,27 @@ ul, .inner_Header {
     text-align: left;
 }
 
+/* Adding some responsiveness that indicates which choice is about to be entered */
 .not_Hidden_List > li:hover {
     background-color: rgba(128, 110, 231, 0.2);
 }
 
+/* Changing the score appearance when no longer hidden */
+/* Classes change with javascript to make them not hidden */
 .not_Hidden_Score {
     color: black;
     font-size: 25px;
     font-weight: bold;
 }
 
+/* Adding a color tracker to the highscores indicating current run versus the rest of the high score entries */
 #your_Score {
     color: red;
     size: 50px;
     font-weight: bold;
 }
 
+/* Setting the style for heading elements for appearance */
 .not_Hidden_Main > h1, .start_Header > h1 {
     font-size: 50px;
     font-size: 40px;
@@ -97,37 +114,45 @@ ul, .inner_Header {
     height: 10vh;
 }
 
-/* .start_Header > h1 {
-    font-size: 50px;
-    height: 5vh;
-} */
-
+/* Setting the style for heading elements for appearance */
 .inner_Header > h2 {
     font-size: 15px;
 }
 
+/* Appearances of our buttons */
 #replay_Game, #begin_button {
     margin-bottom: 29px;
     margin-top: 25px;
     font-size: 25px;
 }
 
+/* Body appearance settings. The main container of our webpage */
 body {
     display: inline-block;
     background-color: var(--far-background-color);
 }
 
+/* Appearance settings for the high score list at the end of the quiz */
 #final_Screen, .final_Screen_Header {
     background-color: var(--container-color);
     border-radius: 0 0 50px 50px;
     width: 30vw;
     margin: auto;
+    border: black 2px solid;
 }
 
+/* Minor adjustment to the header border as it's supposed to look homogenous with the next HTML element */
 .final_Screen_Header {
     border-radius: 50px 50px 0 0;
+    border-bottom: none;
 }
 
+/* Minor adjustment to the header border as it's supposed to look homogenous with the next HTML element */
+#final_Screen {
+    border-top: none;
+}
+
+/* Adding a border to a container element for continuous visual appearance */
 .inner_Header {
     border: black solid 2px;
 }
