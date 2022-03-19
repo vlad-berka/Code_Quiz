@@ -105,6 +105,8 @@ function change_Question() {
 function end_Of_Quiz() {
     quiz_End = true;
 
+    console.log(secondsLeft);
+
     if(secondsLeft=="Timed Out!"){
         var first_Name = prompt(("You've run out of time!"), "Enter your name here for high scores!");
     } else {
@@ -116,7 +118,13 @@ function end_Of_Quiz() {
     document.body.lastChild.textContent = "Name - - - Score";
     document.querySelector(".not_Hidden_Score").setAttribute("class", "hidden_Score");
 
-    write_HighScores (first_Name, Math.floor(secondsLeft/10));
+    if(secondsLeft=="Timed Out!"){
+        write_HighScores (first_Name, "Timed Out!")
+    }
+    else {
+        write_HighScores (first_Name, Math.floor(secondsLeft/10));
+    }
+
     display_HighScores();
     document.querySelector(".not_Hidden_Main").setAttribute("class", "final_Screen_Header");
     document.body.lastChild.appendChild(document.createElement("br"));
